@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Project1}
+\author{ylau38 Lau}
+\date{August 2025}
+
+\begin{document}
+
+\maketitle
+
+\section{As a start, who are the authors? How might they contribute to the larger field of paper's topic and domain? Please provide 250 words or less.}
+
+The authors are Qianqian Wang, Yen-Yu Chang, Ruojin Cai ,Zhengqi Li, Bharath Hariharan,
+Aleksander Holynski Noah Snavely. This group of people are expert in computer vision, graphics and machine learning. Their research will bring advancement to dense video motion estimation which is good for video editing and robotics.
+
+
+\section{What is ICCV? What is the scope of the conference? How does this conference compare to the larger landscape of computer vision? Machine learning? You should provide context that gives broader understanding on how the paper might contribute to the field. Please provide 250 words or less.}
+
+ICCV is one of the premier conferences in the field of computer vision, organized by the IEEE and held biennially (alternating years with ECCV). Its scope covers the full spectrum of vision research: low-level vision (for example: motion estimation, optical flow, image restoration), mid-level tasks (segmentation, tracking, 3D reconstruction), and high-level semantics (e.g., recognition, scene understanding). Also, ICCV also embraces interdisciplinary topics at the intersection of computer vision, graphics, and machine learning.
+
+
+\section{Much like Rule 6 in Ten simple rules for structuring papers by Konrad Kording and Brett Mensh, what is the gap the authors provide? Please provide 250 words or less.
+}
+
+The current gap is that the prior optical flow and particle video tracking algorithms have very limited temporal windows, which makes it hard to track through occlusion and also there is no consistency of estimated motion trajectories. There was no way to accurately track every pixel in a video.
+
+\section{What is the hypothesis of the article? Please provide 100 words or less.
+}
+
+The hypothesis is that OmniMotion will allow accurate,full length motion estimation of every pixel in a video and can ensure global consistency track through occlusion. The extensive evaluation suggests that their approach outperforms prior state-of-the-art methods.
+
+\section{What specifics from the article do you personally need to look up for understanding the claims? How will this information provide context or focus? This can include background, notation, and citations. You must include at least two peer-reviewed citations from an outside source to receive full points. This can be from the citation section or outside source. An LLM search is not a peer-reviewed source. The citation must be in IEEE, APA, or MLA format. Please provide 250 words or less.}
+
+I need to look up for Invertible Neural Networks and Real-NVP since I have not heard of them before. The OmniMotion representation relies on bijective mappings parameterized by INNs, specifically Real-NVP. Understanding how Real-NVP guarantees analytic invertibility and cycle consistency would clarify why this architecture is well suited for tracking. (Dinh, L., Sohl-Dickstein, J., & Bengio, S. (2017). Density estimation using Real NVP. International Conference on Learning Representations (ICLR))
+
+Also, I need to look up for RAFT optical flow. Since OmniMotion takes RAFT as a baseline for correspondence input, I would review how RAFT builds its 4D correlation volumes and iteratively refines flow. This context provides insight into why RAFT’s errors under large displacements are a limitation OmniMotion addresses. 
+(Teed, Z., & Deng, J. (2020). RAFT: Recurrent all-pairs field transforms for optical flow. European Conference on Computer Vision (ECCV), pp. 402–419.)
+
+
+
+\section{After reviewing and re-reviewing the article, what limitations do you discern? These can be simple or more complex observations. Please provide reasoning in 250 words or less. 
+}
+
+Currently, the OmniMotion is time consuming. It optimizes a neural scene representation per video and first computes all pairwise flows—quadratic in sequence length—then trains for many steps, making long or real-time videos impractical. Also, the method needs external pairwise matches (e.g., RAFT/TAP-Net). If these fail under large motion/deformation, errors can propagate despite filtering (cycle checks, DINO appearance checks).
+
+
+\section{What might be next steps to further this research? Think of a couple of different options. There are no correct answers here, however your answers must be grounded in reasoning. Be concise with detail. Limit full response to 250 words.}
+
+To further improve the OmniMotion technology, firstly, we can improve the scale and the speed. The method currently computes all pairwise flows, which scales quadratically with video length and makes optimization slow. Efficient graph-based or keyframe-based schemes would reduce compute and allow longer videos. Also, we can use hierarchical temporal chunks with shared canonical memory (periodic keyframes) to support hours-long footage and online updates. The reason is that currently quadratic scaling and memory usage make very long videos intractable.
+
+\section{Please then provide a single hypothesis on what you'd like to investigate based on the knowledge gained in this exercise. Please provide 100 words or less.}
+
+Based on the knowledge gained, I suspect that incorporating uncertainty-aware correspondence filtering and confidence-weighted losses into OmniMotion’s optimization will improve robustness on videos with highly non-rigid motion and thin structures by reducing reliance on erroneous pairwise flow estimates.
+
+\end{document}
